@@ -1,19 +1,23 @@
-// code used to store and display member fields as a json string: https://www.geeksforgeeks.org/how-to-convert-html-form-field-values-to-json-object-using-javascript/
+// ''convertToJsonString()'was genereated by ChatGPT 3.5 on May 18, 2024
+// The prompt used was: 
+// how do we store the member fields (the values of the li elements, e.g. name, description etc.) in a json string?
+// <copied and pasted code from home.html of hardcoded initial member> 
+function convertToJsonString() {
+    const memberName = document.querySelector('.memberName').textContent;
+    const memberDescription = document.querySelector('.memberDescription').textContent;
+    const memberAge = document.querySelector('.memberAge').textContent;
+    const memberPhoto = document.querySelector('.displayImage').src;
 
-// function convertToJsonString() {
-//     let form = document.getElementById("memberForm");
-//     let formData = {};
-//     for (let i = 0; i < form.elements.length; i++) {
-//         let element = form.elements[i];
-//         if (element.type !== "submit") {
-//             formData[element.name] = element.value;
-//         }
-//     }
-//     let jsonString = JSON.stringify(formData);
-//     let jsonOutput = document.getElementById("jsonOutput");
-//     jsonOutput.innerHTML = "<pre>" + jsonString + "</pre>";
-//     // updateData(jsonString);
-// }
+    const firstMember = {
+        name: memberName,
+        description: memberDescription,
+        age: memberAge,
+        photo: memberPhoto
+    }
+
+    const jsonString = JSON.stringify(firstMember, null, 2);
+    console.log(jsonString);
+}
 
 // code written in 'displayAllMemberCards' was referenced from the following sources:
 // HTML <template> Tag: https://www.w3schools.com/tags/tryit.asp?filename=tryhtml5_template
@@ -22,8 +26,8 @@
 // Get element inside element by class and ID - JavaScript:
 // https://stackoverflow.com/questions/7815374/get-element-inside-element-by-class-and-id-javascript
 // Javascript, viewing [object HTMLInputElement]: https://stackoverflow.com/questions/15383765/javascript-viewing-object-htmlinputelement
-// Lines 45-47 (assigning cloned template values from user input): based on code generated from ChatGPT 3.5 using the following prompt:
-{/* <label for="moveData">Enter data</label>
+// Lines 67-69 (assigning cloned template values from user input): based on code generated from ChatGPT 3.5 using the following prompt:
+/* <label for="moveData">Enter data</label>
 <input type="text" id="moveData" name="moveData"><br>
 <button id="btn" type="button">Move the data</button>
 
@@ -41,11 +45,11 @@
         <li id="age"></li>
         <li id="image"></li>
       </ul>
-    </template */}
-
+    </template */
 
 let clone;
 let temp;
+let newMemberInfo;
 function cloneEmptyForm() {
     // store template in a temp variable 
     temp = document.getElementsByTagName("template")[0];
@@ -60,9 +64,9 @@ function displayAllMemberCards() {
         var age = document.getElementById("memberForm").getElementsByClassName("age")[0].value;
         console.log("retrieved all user input");
         
-        clone.getElementById("name").getElementsByClassName("memberName")[0].innerHTML = name;
-        clone.getElementById("description").getElementsByClassName("memberDescription")[0].innerHTML = description;
-        clone.getElementById("age").getElementsByClassName("memberAge")[0].innerHTML = age;
+        clone.getElementById("name").getElementsByClassName("memberName")[0].textContent = name;
+        clone.getElementById("description").getElementsByClassName("memberDescription")[0].textContent = description;
+        clone.getElementById("age").getElementsByClassName("memberAge")[0].textContent = age;
         console.log("updated empty form with new member info");
     
         document.body.appendChild(clone);
@@ -96,55 +100,56 @@ function handleImageUpload()
 function clearAllMemberCards() {
     const allMembers = document.querySelectorAll('.newMember');
 
-    allMembers.forEach(member => 
-        {member.remove();
+    allMembers.forEach(member => {member.remove();
     });
 }
 
 
 
-// 'updateData' was genereated by ChatGPT 3.5 on May 18, 2024
-// The prompt used was:
-// The generated code was adapated: 
-function updateData(jsonString) {
-    ```
-    Updated the data.json form when a new member is added
+// 'deleteMemberCard() was genereated by ChatGPT 3.5 on May 20, 2024
+// The prompt used was: 
+// function deleteMemberCard() {
+//     const memberToDelete = document.getElementById("deleteMember").value;
+//     const allCards = document.querySelectorAll('.memberInfo');
+//     for (const memberCard of allCards) {
+//         if (memberCard.getElementById("name").getElementsByClassName("memberName")[0].value == memberToDelete) {
+//             memberCard.remove();
+//             window.print("Member" + "\'" + memberToDelete + "\'" + "has been deleted!");
+//         }
+//     }
+//     window.print("Member name" + "\'" + memberToDelete + "\'" + "was not found!");
+// }
+// this doesn't work because I can't call getElementById (probably because querySelectorAll only 
+// returns the non-live NodeList) what should I do instead
+// The generated code was adapated by adding the functionality of making the confirmation message appear, which
+// used code referenced from https://www.geeksforgeeks.org/how-to-convert-html-form-field-values-to-json-object-using-javascript/
 
-    Parameters
-    ----------
-    jsonString : string
-        json string containing the form fields of the newly added member
+function deleteMemberCard() {
+    const memberToDelete = document.getElementById("deleteMember").value;
+    const allCards = document.querySelectorAll('.newMember');
+    let msg = document.getElementById("confirmationMsg");
+    let found = false;
 
-    ```
-    const path = './data.json';
-    // reads existing data (data of all members added so far) ?and returns contents read into data
-    FileSystem.readFile(path, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error reading data.json', err);
-            return;
+    for (const memberCard of allCards) {
+        const memberName = memberCard.querySelector(".memberName");
+        if (memberName && memberName.textContent.trim() == memberToDelete) {
+            console.log(memberName);
+            memberCard.remove();
+            msg.textContent = "<pre>" + "Member" + " \'" + memberToDelete + "\' " + "has been deleted!" + "<pre>";
+            found = true;
+            break;
         }
+    }
 
-        // read contents of file into an array of JSON objects
-        let jsonArr;
-        try {
-            jsonArr = JSON.parse(data);
-        } catch (err) {
-            jsonArr = [];
-        }
-
-        // Append new data to array (adding info of new member to current list member info)
-        jsonArr.push(JSON.parse(jsonString));
-
-        // Write updated data back to data.json
-        FileSystem.writeFile(path, JSON.stringify(jsonArr, null, 2), 'utf8', (err) => {
-            if (err) {
-                console.error("Error writing to data.json", err);
-            } else {
-                console.log("data.json was sucessfully updated");
-            }
-        })
-    })
-
+    if (!found) {
+        msg.textContent = "<pre>" + "Member name" + " \'" + memberToDelete + "\' " + "was not found!" + "<pre>";
+    }
+    
+    setTimeout(() => {
+        msg.textContent = "";
+        document.getElementById("deleteMember").textContent = "";
+    }, 1000)
 }
+
 
 

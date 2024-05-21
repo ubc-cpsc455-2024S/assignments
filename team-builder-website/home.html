@@ -18,7 +18,7 @@
           form {
           display: inline-block;
           /* Form outline */
-          padding: 1em;
+          padding: 1.5em;
           border: 1px solid #ccc;
           border-radius: 1em;
           }
@@ -30,9 +30,25 @@
           }
 
           form li + li {
-            margin-top: 1em;
+            margin-top: 1.5em;
           }
 
+          label + input {
+            margin-top: 0.5em;
+          }
+
+          label + textarea {
+            margin-top: 0.5em;
+          }
+
+          b + li, b + img {
+            margin-top: 0.2em;
+          }
+
+          .textPadding {
+            padding: 1em !important;
+          }
+          
           .newMember {
             padding: 12px 12px 0px;
           }
@@ -45,7 +61,7 @@
             margin-inline-end: 1em; 
             writing-mode: horizontal-tb;
             /* Member card outline */
-            padding: 1em;
+            padding: 1.5em;
             border: 1px solid #ccc;
             border-radius: 1em;
           }
@@ -66,6 +82,10 @@
           clear: both;
           min-width: 90px;
           text-align: left;
+          }
+
+          label + #show-json-btn {
+            margin-top: 3em;
           }
 
           input,
@@ -107,7 +127,19 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-top: 10px;
+          margin-top: 2em;
+          }
+
+          .button-container2 {
+          /* Align buttons with the text fields */
+          padding-left: 90px; /* same size as the label elements */
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 1em;
+          }
+          #reset-all-btn {
+            margin-top: 1em;
           }
       
           button {
@@ -117,17 +149,12 @@
           display: flex;
           display: block;
           margin: auto;
+          padding: 0.3em;
           }
-
-
     </style>
 </head>
 
 <body>
-    <!-- <div class="navbar">
-        <a class="active" href="#home">Home</a>
-        <a href="about.html">About</a>
-    </div> -->
     <nav>
         <ul>
             <li><a href="home.html">Home</a></li>
@@ -141,15 +168,15 @@
             <ul>
               <li>
                 <label for="name"><b>Member name:</b></label>
-                <input type="text" id="name" class = "name" name="name" />
+                <input type="text" id="name" class ="name textPadding" name="name"/>
               </li>
               <li>
                 <label for="description"><b>Description of Member:</b></label>
-                <textarea id="description" class="description" name="description" ></textarea>
+                <textarea id="description" class="description textPadding" name="description" ></textarea>
               </li>
               <li>
                 <label for="age"><b>Member age:</b></label>
-                <input type="number" id="age" class="age" name="age">
+                <input type="number" id="age" class="age textPadding" name="age">
               </li>
               <li>
                 <!--code for uploading image based on: 
@@ -164,11 +191,55 @@
               </li>
             </ul>
         </form>
-        <li class="reset-all-cards-button">
-          <button id='reset-all-btn' type="button" onclick="clearAllMemberCards()">Clear all member cards</button>
-        </li>
-        <!-- <div id="jsonOutput"></div> -->
+        
         <script src="script.js"></script>
+
+    </section>
+
+   
+    <form id="deleteMemberForm">
+      <ul>
+        <li>
+          <label id="deleteMemberLabel" for="deleteMember"><b>Enter name of member to delete:</b></label>
+          <input type="text" id="deleteMember" class="textPadding"/>
+        </li>
+        <li class="button-container2">
+          <button id="reset-name-to-delete" type="reset">Clear input</button>
+          <button id="delete-member-btn" type="button" onclick="deleteMemberCard()">Delete member</button>
+        </li>
+        <li>
+          <div id="confirmationMsg"></div>
+        </li>
+      </ul>
+    </form>
+
+    <button id='reset-all-btn' type="button" onclick="clearAllMemberCards()">Clear all member cards</button>
+  
+    <section class = "newMember">
+      <ul>
+        <label id="name"><b>Member name:</b>
+          <li class="memberName">Hermione Granger</li>
+        </label>
+
+        <label id="description"><b>Description of Member:</b>
+          <li class="memberDescription">
+            Hermione Jean Granger is a fictional character in J. K. Rowling's Harry Potter series. 
+            She first appears in the novel Harry Potter and the Philosopher's Stone, on the Hogwarts 
+            express as a first year student on her way to Hogwarts.
+          </li>
+        </label>
+
+        <label id="age"><b>Member age:</b>
+          <li class="memberAge">11</li>
+        </label>
+
+        <label id="image"><b>Member photo:</b>
+          <img class="displayImage" class="photo" src="./images/hermione.jpg"/>
+        </label>
+
+        <button id='show-json-btn' type="button" onclick="convertToJsonString()">Get JSON String</button>
+          
+      </ul>
     </section>
 
     <template class="memberInfo">
@@ -191,10 +262,7 @@
           </label>
         </ul>
       </section>
-
     </template>
 
-
-    
 </body>
 </html>

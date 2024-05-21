@@ -5,7 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assignment 1</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+        /* Center the form on the page */
+        text-align: center;
+        }
+
+        .Me {
+          padding: 12px 12px 0px;
+        }
+
+        .Me ul {
+            list-style: none;
+            display: inline-block;
+            margin-block-start: 1em;
+            margin-inline-start: 1em; 
+            margin-inline-end: 1em; 
+            writing-mode: horizontal-tb;
+            /* Member card outline */
+            padding: 1.5em;
+            border: 1px solid #ccc;
+            border-radius: 1em;
+        }
+
+        .Me label + label {
+          margin-top: 1em;
+        }
+
+        .profilePhoto {
+          display: block;
+          max-width: 30%;
+          height: auto;
+        }
+
+        b + li {
+            margin-top: 0.2em;
+        }
+
+        label + img {
+            margin-top: 1em;
+            margin-bottom: 2em;
+        }
+
+        label {
+        /* Uniform size & alignment */
+        display: block;
+        clear: both;
+        min-width: 90px;
+        text-align: left;
+        }
+  </style>
 </head>
+
 <body>
     <!-- <div class="navbar">
         <a class="active" href="#home">Home</a>
@@ -18,9 +69,35 @@
         </ul>
 
     </nav>
-    <section>
-        <h1>About</h1>
-    </section>
+    <section class = "Me">
+        <ul>
+          <label id="name"><b>Name:</b>
+            <li class="myName">Silvana</li>
+          </label>
+  
+          <label id="about"><b>A Bit About Me:</b>
+            <li class="aboutMe">
+              Hey, I'm Silvana! I've just finished my third year in CS and I'm looking forward
+              to taking CPSC 455 this summer :)
+              Some of my hobbies include drawing, watching anime/reading webtoons, pilates and running!
+              
+            </li>
+          </label>
+          <img class="profilePhoto" class="photo" src="images/profile-pic.jpg">
+  
+          <label id="aboutProject"><b>About This Project:</b>
+            <li class="aboutProject">
+                Welcome to the 'Team Builder Website'! This mini-project was built using 
+                vanilla html, css, and javascript. It allows you 
+                to add as many members as you'd like. Just fill in the name, description, 
+                and age fields, upload a photo, and a new member 'card' will appear below
+                when you click 'Add member'.
+                You can also delete a member by entering their name and clicking on the 
+                'Delete member' button, or delete all members. Thank you for checking out this website!
+            </li>
+          </label>
+        </ul>
+      </section>
 
 
     
